@@ -2,7 +2,9 @@ import React from "react";
 
 import "./GuessForm.css";
 
-function GuessForm() {
+function GuessForm({
+  submitGuess
+}) {
   const [guess, setGuess] = React.useState("");
 
   function handleGuessChanges(event) {
@@ -16,8 +18,10 @@ function GuessForm() {
     if (userGuess.length < 5) {
       return;
     }
-
+    
+    submitGuess(userGuess);
     console.log({ guess: userGuess });
+    
     setGuess('');
   }
 
