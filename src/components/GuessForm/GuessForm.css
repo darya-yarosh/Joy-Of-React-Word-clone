@@ -1,0 +1,8 @@
+.guess-form-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.guess-form-input {
+    text-transform: uppercase;
+}
