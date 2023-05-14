@@ -16,9 +16,10 @@ function Game() {
   function addGuess(guess) {
     setGuessList([...guessList, guess]);
   }
-  
+
   return <>
     <GuessResults 
+      answer={answer}
       guessList={guessList}
     />
     <GuessForm 
