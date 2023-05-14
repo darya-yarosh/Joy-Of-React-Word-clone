@@ -3,6 +3,7 @@ import React from "react";
 import "./GuessForm.css";
 
 function GuessForm({
+  isGameFinished,
   submitGuess
 }) {
   const [guess, setGuess] = React.useState("");
@@ -25,6 +26,8 @@ function GuessForm({
     setGuess('');
   }
 
+  
+
   return <form className="guess-form-wrapper" onSubmit={(event) => handleSubmit(event)}>
     <label className="guess-form-label" htmlFor="guess">Enter guess:</label>
     <input className="guess-form-input"
@@ -32,7 +35,9 @@ function GuessForm({
       type="text"
       id="guess"
       maxLength={5}
-      onChange={handleGuessChanges} />
+      onChange={handleGuessChanges} 
+      disabled={isGameFinished===true}/>
+
   </form>;
 }
 
