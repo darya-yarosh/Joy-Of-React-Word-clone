@@ -26,8 +26,6 @@ function GuessForm({
     setGuess('');
   }
 
-  
-
   return <form className="guess-form-wrapper" onSubmit={(event) => handleSubmit(event)}>
     <label className="guess-form-label" htmlFor="guess">Enter guess:</label>
     <input className="guess-form-input"

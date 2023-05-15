@@ -1,3 +1,15 @@
+
+export function getValidGuess(guess, answer) {
+  const checkedGuess = guess === undefined ? [{},{},{},{},{}] : checkGuess(guess, answer);
+  const formattedGuess = checkedGuess.map(guessSymbol => {
+    const formattedGuessSymbol = {
+      letter: guessSymbol.letter === undefined ? '' : guessSymbol.letter,
+      status: guessSymbol.status === undefined ? '' : guessSymbol.status,
+    } 
+    return formattedGuessSymbol;
+  })
+  return formattedGuess;
+}
 /**
  * Thanks to Github user dylano for supplying a more-accurate
  * solving algorithm!

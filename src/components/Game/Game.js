@@ -5,6 +5,7 @@ import { WORDS } from '../../data';
 import GuessForm from '../GuessForm/GuessForm';
 import GuessResults from '../GuessResults/GuessResults';
 import Banner from '../Banner/Banner';
+import Keyboard from '../Keyboard/Keyboard';
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -16,7 +17,7 @@ function Game() {
   const [isGameFinished, setIsGameFinished] = React.useState(false);
   const [bannerStatus, setBannerStatus] = React.useState("sad");
 
-  useEffect(()=>{
+  useEffect(() => {
     if (guessList[guessList.length - 1] === answer) {
       setIsGameFinished(true);
       setBannerStatus("happy");
@@ -25,22 +26,26 @@ function Game() {
       setIsGameFinished(true);
       setBannerStatus("sad");
     }
-  },[guessList]);
+  }, [guessList]);
 
   function addGuess(guess) {
     setGuessList([...guessList, guess]);
   }
 
   return <>
-    <GuessResults 
+    <GuessResults
       answer={answer}
       guessList={guessList}
     />
-    <GuessForm 
+    <GuessForm
       submitGuess={addGuess}
       isGameFinished={isGameFinished}
     />
-    {isGameFinished && <Banner 
+    <Keyboard
+      guessList={guessList}
+      answer={answer}
+    />
+    {isGameFinished && <Banner
       status={bannerStatus}
       answer={answer}
       guessesCount={guessList.length}
