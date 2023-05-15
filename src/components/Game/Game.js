@@ -7,12 +7,14 @@ import GuessResults from '../GuessResults/GuessResults';
 import Banner from '../Banner/Banner';
 import Keyboard from '../Keyboard/Keyboard';
 
-// Pick a random word on every pageload.
-const answer = sample(WORDS);
+
 // To make debugging easier, we'll log the solution in the console.
-console.info({ answer });
+// console.info({ answer });
 
 function Game() {
+  // Pick a random word on every pageload.
+  const [answer, setAnswer] = React.useState(sample(WORDS));
+
   const [guessList, setGuessList] = React.useState([]);
   const [isGameFinished, setIsGameFinished] = React.useState(false);
   const [bannerStatus, setBannerStatus] = React.useState("sad");
@@ -26,10 +28,20 @@ function Game() {
       setIsGameFinished(true);
       setBannerStatus("sad");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [guessList]);
 
   function addGuess(guess) {
     setGuessList([...guessList, guess]);
+  }
+
+  function restartGame() {
+    setGuessList([]);
+    setIsGameFinished(false);
+    setBannerStatus("sad");
+
+    const newAnswer = sample(WORDS);
+    setAnswer(newAnswer === answer ? sample(WORDS) : newAnswer);
   }
 
   return <>
@@ -45,11 +57,13 @@ function Game() {
       guessList={guessList}
       answer={answer}
     />
-    {isGameFinished && <Banner
-      status={bannerStatus}
-      answer={answer}
-      guessesCount={guessList.length}
-    />}
+    {isGameFinished &&
+      <Banner
+        status={bannerStatus}
+        answer={answer}
+        guessesCount={guessList.length}
+        restartGame={restartGame}
+      />}
   </>;
 }
 

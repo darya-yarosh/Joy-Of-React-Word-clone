@@ -3,7 +3,8 @@ import React from "react";
 function Banner({
   status,
   answer,
-  guessesCount
+  guessesCount,
+  restartGame
 }) {
 
   function happyInfo() {
@@ -20,9 +21,10 @@ function Banner({
 
   return <div className={status + " banner"}>
     <p>
-    {(status==="sad") && sadInfo()}
-    {(status==="happy") && happyInfo()}
+      {(status === "sad") && sadInfo()}
+      {(status === "happy") && happyInfo()}
     </p>
+    <button className='restart-btn' type="button" onClick={restartGame}>Restart Game</button>
   </div>;
 }
 
