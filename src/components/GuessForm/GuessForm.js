@@ -3,7 +3,7 @@ import React from "react";
 import "./GuessForm.css";
 
 function GuessForm({
-  isGameFinished,
+  gameStatus,
   submitGuess
 }) {
   const [guess, setGuess] = React.useState("");
@@ -19,10 +19,9 @@ function GuessForm({
     if (userGuess.length < 5) {
       return;
     }
-    
+
     submitGuess(userGuess);
-    console.log({ guess: userGuess });
-    
+
     setGuess('');
   }
 
@@ -33,9 +32,8 @@ function GuessForm({
       type="text"
       id="guess"
       maxLength={5}
-      onChange={handleGuessChanges} 
-      disabled={isGameFinished===true}/>
-
+      onChange={handleGuessChanges}
+      disabled={gameStatus !== "running"} />
   </form>;
 }
 

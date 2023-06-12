@@ -11,7 +11,7 @@ function GuessResults({
   guessList
 }) {
   const tableRows = range(NUM_OF_GUESSES_ALLOWED);
- 
+
   return <div className="guess-results">
     {
       tableRows.map((row) =>

@@ -4,9 +4,9 @@ import { sample } from '../../utils';
 import { WORDS } from '../../data';
 import GuessForm from '../GuessForm/GuessForm';
 import GuessResults from '../GuessResults/GuessResults';
-import Banner from '../Banner/Banner';
 import Keyboard from '../Keyboard/Keyboard';
-
+import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
+import EndGameBanner from '../EndGameBanner';
 
 // To make debugging easier, we'll log the solution in the console.
 // console.info({ answer });
@@ -16,17 +16,15 @@ function Game() {
   const [answer, setAnswer] = React.useState(sample(WORDS));
 
   const [guessList, setGuessList] = React.useState([]);
-  const [isGameFinished, setIsGameFinished] = React.useState(false);
-  const [bannerStatus, setBannerStatus] = React.useState("sad");
+  // running | won | lost
+  const [gameStatus, setGameStatus] = React.useState("running");
 
   useEffect(() => {
     if (guessList[guessList.length - 1] === answer) {
-      setIsGameFinished(true);
-      setBannerStatus("happy");
+      setGameStatus("won");
     }
-    else if (guessList.length === 6) {
-      setIsGameFinished(true);
-      setBannerStatus("sad");
+    else if (guessList.length >= NUM_OF_GUESSES_ALLOWED) {
+      setGameStatus("lost");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [guessList]);
@@ -37,8 +35,7 @@ function Game() {
 
   function restartGame() {
     setGuessList([]);
-    setIsGameFinished(false);
-    setBannerStatus("sad");
+    setGameStatus("running");
 
     const newAnswer = sample(WORDS);
     setAnswer(newAnswer === answer ? sample(WORDS) : newAnswer);
@@ -51,19 +48,20 @@ function Game() {
     />
     <GuessForm
       submitGuess={addGuess}
-      isGameFinished={isGameFinished}
+      gameStatus={gameStatus}
     />
     <Keyboard
       guessList={guessList}
       answer={answer}
     />
-    {isGameFinished &&
-      <Banner
-        status={bannerStatus}
+    {gameStatus !== "running" &&
+      <EndGameBanner
+        status={gameStatus}
         answer={answer}
         guessesCount={guessList.length}
         restartGame={restartGame}
-      />}
+      />
+    }
   </>;
 }
 

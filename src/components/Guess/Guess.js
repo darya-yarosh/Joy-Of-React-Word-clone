@@ -1,6 +1,5 @@
 import React from "react";
 
-import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 import { range } from "../../utils";
 import { getValidGuess } from '../../game-helpers';
 
@@ -9,17 +8,17 @@ function Guess({
   answer
 }) {
   const validGuess = getValidGuess(guess, answer);
-  const tableCells = range(NUM_OF_GUESSES_ALLOWED - 1);
+  const tableCells = range(5); // Words has length of 5 letters.
 
-  return <p
-    className="guess">
-    {tableCells.map((cell) =>
-      <span className={`cell ${validGuess[cell].status}`}
-        key={cell}>
-        {validGuess[cell].letter}
-      </span>
-    )}
-  </p>;
+  return (
+    <p className="guess">
+      {tableCells.map((cell) =>
+        <span key={cell} className={`cell ${validGuess[cell].status}`}>
+          {validGuess[cell].letter}
+        </span>
+      )}
+    </p>
+  );
 }
 
 export default Guess;
